@@ -26,33 +26,33 @@ public class Tape {
 	
 	public void increase() {
 		if (currentState >= 0) {
-			while (positiveList.size() < currentState) {
+			while (positiveList.size() - 2 < currentState) {
 				positiveList.add(0);
 			}
 			
-			positiveList.add(currentState, positiveList.get(currentState) + 1);
+			positiveList.set(currentState, positiveList.get(currentState) + 1);
 		} else {
-			while (negativeList.size() < currentState * -1) {
+			while (negativeList.size() - 2 < currentState * -1) {
 				negativeList.add(0);
 			}
 			
-			negativeList.add(currentState * -1, negativeList.get(currentState * -1) + 1);
+			negativeList.set(currentState * -1, negativeList.get(currentState * -1) + 1);
 		}
 	}
 	
 	public void decrease() {
 		if (currentState >= 0) {
-			while (positiveList.size() < currentState) {
+			while (positiveList.size() -2 < currentState) {
 				positiveList.add(0);
 			}
 			
-			positiveList.add(currentState, positiveList.get(currentState) - 1);
+			positiveList.set(currentState, positiveList.get(currentState) - 1);
 		} else {
-			while (negativeList.size() < currentState * -1) {
+			while (negativeList.size() -2 < currentState * -1) {
 				negativeList.add(0);
 			}
 			
-			negativeList.add(currentState * -1, negativeList.get(currentState * -1) - 1);
+			negativeList.set(currentState * -1, negativeList.get(currentState * -1) - 1);
 		}
 	}
 	
@@ -61,6 +61,14 @@ public class Tape {
 			return positiveList.get(currentState);
 		}else {
 			return negativeList.get(currentState * -1);
+		}
+	}
+	
+	public void setCurrent(int i) {
+		if (currentState >= 0) {
+			positiveList.set(currentState, i);
+		}else {
+			negativeList.set(currentState * -1, i);
 		}
 	}
 
