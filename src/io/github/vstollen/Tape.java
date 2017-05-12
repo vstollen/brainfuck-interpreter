@@ -1,160 +1,67 @@
 package io.github.vstollen;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
-public class Tape implements Collection<Integer>{
+public class Tape {
 	
 	int currentState;
 	
 	Tape tape;
 	
-	int[] values;
+	List<Integer> negativeList = new ArrayList<Integer>();
+	List<Integer> positiveList = new ArrayList<Integer>();
 	
 	public Tape() {
 		this.currentState = 10;
-		this.tape = new Tape(20, currentState);
 	}
 	
-	//Constructs tape with specified size
-	public Tape(int size, int currentState){
-		this.currentState = currentState;
-		values = new int[size];
-		this.tape = this;
+	public void stepRight() {
+		currentState++;
 	}
 	
-	//Constructs tape with some entrys
-	public Tape(Collection<Integer> entrys, int currentState) {
-		this.currentState = currentState;
-		this.tape = this;
-		this.values = new int[entrys.size() + 20];
-		
-		Iterator<Integer> it = entrys.iterator();
-		
-		for (int i = 9; it.hasNext(); i++) {
-			values[i] = it.next();
-		}
+	public void stepLeft() {
+		currentState--;
 	}
 	
-	
-	public void increase(){
-		
-	}
-
-	@Override
-	public int size() {
-		int size = 0;
-		
-		for (int i = 0; i < values.length; i++) {
-			if (values[i] != 0) {
-				size++;
+	public void increase() {
+		if (currentState >= 0) {
+			while (positiveList.size() < currentState) {
+				positiveList.add(0);
 			}
-		}
-		return size;
-	}
-
-	@Override
-	public boolean isEmpty() {
-
-		for (int i = 0; i < values.length; i++) {
-			if (values[i] != 0) {
-				return true;
+			
+			positiveList.add(currentState, positiveList.get(currentState) + 1);
+		} else {
+			while (negativeList.size() < currentState * -1) {
+				negativeList.add(0);
 			}
+			
+			negativeList.add(currentState * -1, negativeList.get(currentState * -1) + 1);
 		}
-		
-		return false;
 	}
-
-	@Override
-	public boolean contains(Object o) {
-
-		//null check
-		if (o.equals(null)) {
-			return false;
-		}
-		
-		//int check
-		if (!o.getClass().equals(Integer.class)) {
-			return false;
-		}
-		
-		int obj = (int) o;
-		
-		//search for value
-		for (int i = 0; i < values.length; i++) {
-			if (values[i] == obj) {
-				return true;
+	
+	public void decrease() {
+		if (currentState >= 0) {
+			while (positiveList.size() < currentState) {
+				positiveList.add(0);
 			}
+			
+			positiveList.add(currentState, positiveList.get(currentState) - 1);
+		} else {
+			while (negativeList.size() < currentState * -1) {
+				negativeList.add(0);
+			}
+			
+			negativeList.add(currentState * -1, negativeList.get(currentState * -1) - 1);
 		}
-		
-		return false;
 	}
-
-	@Override
-	public Iterator<Integer> iterator() {
-		//Generates an List with the values of the vales array
-		List<Integer> valueList = new ArrayList<Integer>();
-		for (int i = 0; i < values.length; i++){
-			valueList.add(values[i]);
+	
+	public int getCurrent() {
+		if (currentState >= 0) {
+			return positiveList.get(currentState);
+		}else {
+			return negativeList.get(currentState * -1);
 		}
-		
-		return valueList.iterator();
-	}
-
-	@Override
-	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> T[] toArray(T[] a) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean add(Integer e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean containsAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean addAll(Collection<? extends Integer> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean removeAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean retainAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
