@@ -14,6 +14,8 @@ public class Main {
 	Tape tape = new Tape();
 	
 	Reader reader;
+	
+	Scanner scr = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		
@@ -30,6 +32,7 @@ public class Main {
 		
 		try {
 			main.reader.close();
+			main.scr.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -105,9 +108,7 @@ public class Main {
 		}else if (c == '.') {
 			System.out.println((char) tape.getCurrent());
 		}else if (c == ',') {
-			Scanner scr = new Scanner(System.in);
 			tape.setCurrent((int) scr.next().charAt(0));
-			scr.close();
 		}else if (c == '[') {
 			loop();
 		}

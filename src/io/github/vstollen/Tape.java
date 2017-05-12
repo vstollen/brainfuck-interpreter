@@ -66,8 +66,16 @@ public class Tape {
 	
 	public void setCurrent(int i) {
 		if (currentState >= 0) {
+			while (positiveList.size() -2 <= currentState) {
+				positiveList.add(0);
+			}
+			
 			positiveList.set(currentState, i);
 		}else {
+			while (negativeList.size() -2 <= currentState * -1) {
+				negativeList.add(0);
+			}
+			
 			negativeList.set(currentState * -1, i);
 		}
 	}
